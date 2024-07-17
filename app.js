@@ -58,6 +58,9 @@ app.use(
     headers: {
       "Connection": "keep-alive"
   },
+  logLevel: "debug",
+  agent: new HttpsProxyAgent('http://127.0.0.1:9001'),
+
     secure: false,
     changeOrigin: true,
     onProxyRes: (proxyRes, req, res) => {
