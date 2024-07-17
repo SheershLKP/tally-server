@@ -54,6 +54,9 @@ app.use(
   '/tally',
   createProxyMiddleware({
     target: `http://${getLocalIpAddress()}:9001`, // Set target to user's local IP address
+    headers: {
+      "Connection": "keep-alive"
+  },
     secure: false,
     changeOrigin: true,
     onProxyRes: (proxyRes, req, res) => {
