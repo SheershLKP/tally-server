@@ -63,7 +63,7 @@ app.use(
     // agent: new HttpsProxyAgent(`http://${getLocalIpAddress()}:9001`),
 
     secure: false,
-    changeOrigin: true,
+    // changeOrigin: true,
     onProxyRes: (proxyRes, req, res) => {
       console.log("Proxy response received");
       // Add CORS headers to the response
@@ -96,7 +96,7 @@ app.get('/start-tally', (req, res) => {
   // Check if Tally is running
   exec('tasklist', (err, stdout, stderr) => {
     if (err) {
-      return res.status(500).send('Error checking task list');
+      return res.status(500).send('Error checking task list ${err}');
     }
 
     if (stdout.toLowerCase().includes('tally.exe')) {
