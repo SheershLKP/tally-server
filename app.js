@@ -68,7 +68,7 @@ app.use(cors());
     // Check if Tally is running
     exec('tasklist', (err, stdout, stderr) => {
       if (err) {
-        return res.status(500).send('Error checking task list');
+        return res.status(500).send('Error checking task list', err);
       }
   
       if (stdout.toLowerCase().includes('tally.exe')) {
