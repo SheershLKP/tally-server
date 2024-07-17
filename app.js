@@ -53,7 +53,7 @@ function getLocalIpAddress() {
 app.use(
   '/tally',
   createProxyMiddleware({
-    target: ' https://f07f-121-241-109-219.ngrok-free.app',
+    target: 'https://f07f-121-241-109-219.ngrok-free.app',
     // target: 'http://localhost:9001',
     // target: `http://${getLocalIpAddress()}:9001`, // Set target to user's local IP address
     // target: `http://127.0.0.1:9001`, // Set target to user's local IP address
@@ -61,7 +61,7 @@ app.use(
       "Connection": "keep-alive"
     },
     logLevel: "debug",
-    // agent: new HttpsProxyAgent(`http://${getLocalIpAddress()}:9001`),
+    agent: new HttpsProxyAgent(`https://f07f-121-241-109-219.ngrok-free.app`),
 
     secure: false,
     // changeOrigin: true,
