@@ -111,43 +111,30 @@ function detectLocalOS() {
 
 
 function checkAndStartTally(req, res) {
-  // const userAgent = window.navigator.userAgent;
-  let os;
-
-  if (userAgent.indexOf('Win') != -1) {
-    os = 'Windows';
-  } else if (userAgent.indexOf('Mac') != -1) {
-    os = 'MacOS';
-  } else if (userAgent.indexOf('Linux') != -1) {
-    os = 'Linux';
-  } else {
-    os = 'Unknown';
-  }
-  return res.status(500).send(`Unsupported operation system ${os}`);
 // console.log(`User's local operating system: ${userOS}`);
-  // if (os.platform() === 'win32') {
-  //   // For Windows
-  //   exec('tasklist', (err, stdout, stderr) => {
-  //     if (err) {
-  //       return res.status(500).send(`Error checking task list: ${err}`);
-  //     }
+  if (os.platform() === 'win32') {
+    // For Windows
+    exec('tasklist', (err, stdout, stderr) => {
+      if (err) {
+        return res.status(500).send(`Error checking task list: ${err}`);
+      }
 
-  //     if (stdout.toLowerCase().includes('tally.exe')) {
-  //       return res.send('Tally is already running');
-  //     } else {
-  //       // Start Tally if not running
-  //       exec(`start "" "${TALLY_PATH}"`, (err, stdout, stderr) => {
-  //         if (err) {
-  //           return res.status(500).send('Error starting Tally');
-  //         }
-  //         return res.send('Tally started successfully');
-  //       });
-  //     }
-  //   });
-  // } else {
-  //   // Handle non-Windows systems (Linux, macOS, etc.)
-  //   return res.status(500).send(`Unsupported operation system${os.platform()} ${userOS}`);
-  // }
+      if (stdout.toLowerCase().includes('tally.exe')) {
+        return res.send('Tally is already running');
+      } else {
+        // Start Tally if not running
+        exec(`start "" "${TALLY_PATH}"`, (err, stdout, stderr) => {
+          if (err) {
+            return res.status(500).send('Error starting Tally');
+          }
+          return res.send('Tally started successfully');
+        });
+      }
+    });
+  } else {
+    // Handle non-Windows systems (Linux, macOS, etc.)
+    return res.status(500).send(`Unsupported operation system${os.platform()}`);
+  }
 }
 
 // Example usage in an Express route
