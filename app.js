@@ -53,7 +53,7 @@ function getLocalIpAddress() {
 app.use(
   '/tally',
   createProxyMiddleware({
-    target: `http://${getLocalIpAddress()}:9001`, // Set target to user's local IP address
+    target: `http://127.0.0.1:9001`, // Set target to user's local IP address
     changeOrigin: true,
     onProxyRes: (proxyRes, req, res) => {
       console.log("Proxy response received");
@@ -65,7 +65,7 @@ app.use(
     onError: async (err, req, res) => {
       console.error('Proxy error:', err.message);
       try {
-        const response = await axios.get(`http://${getLocalIpAddress()}/start-tally`);
+        const response = await axios.get(`/start-tally`);
         res.send(response.data);
       } catch (error) {
         console.error('Error starting Tally:', error.message);
