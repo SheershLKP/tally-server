@@ -53,7 +53,8 @@ function getLocalIpAddress() {
 app.use(
   '/tally',
   createProxyMiddleware({
-    target: 'http://localhost:9001',
+    target: 'https://4d1b-121-241-109-219.ngrok-free.app',
+    // target: 'http://localhost:9001',
     // target: `http://${getLocalIpAddress()}:9001`, // Set target to user's local IP address
     // target: `http://127.0.0.1:9001`, // Set target to user's local IP address
     headers: {
@@ -133,7 +134,7 @@ function checkAndStartTally(req, res) {
     });
   } else {
     // Handle non-Windows systems (Linux, macOS, etc.)
-    const userAgent = window.navigator.userAgent;
+    // const userAgent = window.navigator.userAgent;
 
     return res.status(500).send(`Unsupported operation system${os.platform()} ${userAgent}`);
   }
