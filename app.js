@@ -92,26 +92,34 @@ app.use(
   })
 );
 
-app.get('/start-tally', (req, res) => {
-  // Check if Tally is running
-  exec('tasklist', (err, stdout, stderr) => {
-    if (err) {
-      return res.status(500).send(`Error checking task list ${err}`);
-    }
+function checkAndStartTally(req, res) {
+  if (os.platform() === 'win32') {
+    // For Windows
+    exec('tasklist', (err, stdout, stderr) => {
+      if (err) {
+        return res.status(500).send(`Error checking task list: ${err}`);
+      }
 
-    if (stdout.toLowerCase().includes('tally.exe')) {
-      return res.send('Tally is already running');
-    } else {
-      // Start Tally if not running
-      exec(`start "" "${TALLY_PATH}"`, (err, stdout, stderr) => {
-        if (err) {
-          return res.status(500).send('Error starting Tally');
-        }
-        return res.send('Tally started successfully');
-      });
-    }
-  });
-});
+      if (stdout.toLowerCase().includes('tally.exe')) {
+        return res.send('Tally is already running');
+      } else {
+        // Start Tally if not running
+        exec(`start "" "${TALLY_PATH}"`, (err, stdout, stderr) => {
+          if (err) {
+            return res.status(500).send('Error starting Tally');
+          }
+          return res.send('Tally started successfully');
+        });
+      }
+    });
+  } else {
+    // Handle non-Windows systems (Linux, macOS, etc.)
+    return res.status(500).send('Unsupported operation system');
+  }
+}
+
+// Example usage in an Express route
+app.get('/start-tally', checkAndStartTally);
 
 const PORT = process.env.PORT || 3000;
 
