@@ -1,5 +1,4 @@
 const productData = require("../models/product");
-const { options } = require("../routes/product");
 
 
 const getAllProductsTesting = async (req, res) => {
