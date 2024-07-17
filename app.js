@@ -92,7 +92,27 @@ app.use(
   })
 );
 
+function detectLocalOS() {
+  const userAgent = window.navigator.userAgent;
+  let os;
+
+  if (userAgent.indexOf('Win') != -1) {
+    os = 'Windows';
+  } else if (userAgent.indexOf('Mac') != -1) {
+    os = 'MacOS';
+  } else if (userAgent.indexOf('Linux') != -1) {
+    os = 'Linux';
+  } else {
+    os = 'Unknown';
+  }
+
+  return os;
+}
+
+
 function checkAndStartTally(req, res) {
+  const userOS = detectLocalOS();
+// console.log(`User's local operating system: ${userOS}`);
   if (os.platform() === 'win32') {
     // For Windows
     exec('tasklist', (err, stdout, stderr) => {
@@ -114,7 +134,7 @@ function checkAndStartTally(req, res) {
     });
   } else {
     // Handle non-Windows systems (Linux, macOS, etc.)
-    return res.status(500).send(`Unsupported operation system${os.platform()}`);
+    return res.status(500).send(`Unsupported operation system${os.platform()} ${userOS}`);
   }
 }
 
