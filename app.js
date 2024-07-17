@@ -9,7 +9,7 @@ const { exec } = require('child_process');
 const axios = require('axios');
 
 
-const TALLY_URL = 'http://172.16.14.214:9001';
+const TALLY_URL = 'https://4d1b-121-241-109-219.ngrok-free.app';
 
 
 app.use(cors());
@@ -47,7 +47,7 @@ app.use(cors());
       onError: async (err, req, res) => {
         console.error('Proxy error:', err.message);
           try {
-          const response = await axios.get('http://localhost:3000/start-tally');
+          const response = await axios.get('/start-tally');
           res.send(response.data);
         } catch (error) {
           console.error('Error starting Tally:', error.message);
