@@ -75,6 +75,7 @@ app.use(
     onProxyReq: (proxyReq, req, res) => {
       console.log("Proxy request initiated");
       req.setTimeout(10000, () => {
+        print("ASDASDASD");
         console.log('Request timed out.');
         res.status(504).send('Proxy request timed out.');
       });
