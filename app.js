@@ -4,6 +4,8 @@ const express = require('express');
 const app = express();
 
 const { createProxyMiddleware } = require('http-proxy-middleware');
+const { HttpsProxyAgent } = require('https-proxy-agent');
+
 const cors = require('cors');
 const { exec } = require('child_process');
 const axios = require('axios');
