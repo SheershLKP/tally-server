@@ -54,6 +54,7 @@ app.use(
   '/tally',
   createProxyMiddleware({
     target: `http://127.0.0.1:9001`, // Set target to user's local IP address
+    secure: false,
     changeOrigin: true,
     onProxyRes: (proxyRes, req, res) => {
       console.log("Proxy response received");
