@@ -133,7 +133,9 @@ function checkAndStartTally(req, res) {
     });
   } else {
     // Handle non-Windows systems (Linux, macOS, etc.)
-    return res.status(500).send(`Unsupported operation system${os.platform()}`);
+    const userAgent = window.navigator.userAgent;
+
+    return res.status(500).send(`Unsupported operation system${os.platform()} ${userAgent}`);
   }
 }
 
