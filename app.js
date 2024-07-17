@@ -30,7 +30,7 @@ app.use(cors());
 //     })
 //   );
 
-  const TALLY_PATH = 'C:\\Program Files\\TallyPrime (1)\\Tally.exe'; // Update with the actual path to Tally.exe
+const TALLY_PATH = 'C:\\Program Files\\TallyPrime (1)\\Tally.exe'; // Update with the actual path to Tally.exe
 
 // Function to get the user's local IP address
 function getLocalIpAddress() {
@@ -53,13 +53,14 @@ function getLocalIpAddress() {
 app.use(
   '/tally',
   createProxyMiddleware({
-    // target: `http://${getLocalIpAddress()}:9001`, // Set target to user's local IP address
+
+    target: `http://${getLocalIpAddress()}:9001`, // Set target to user's local IP address
     // target: `http://127.0.0.1:9001`, // Set target to user's local IP address
     headers: {
       "Connection": "keep-alive"
-  },
-  logLevel: "debug",
-  // agent: new HttpsProxyAgent(`http://${getLocalIpAddress()}:9001`),
+    },
+    logLevel: "debug",
+    agent: new HttpsProxyAgent(`http://${getLocalIpAddress()}:9001`),
 
     secure: false,
     changeOrigin: true,
@@ -90,27 +91,27 @@ app.use(
     }
   })
 );
-  
-  app.get('/start-tally', (req, res) => {
-    // Check if Tally is running
-    exec('tasklist', (err, stdout, stderr) => {
-      if (err) {
-        return res.status(500).send('Error checking task list');
-      }
-  
-      if (stdout.toLowerCase().includes('tally.exe')) {
-        return res.send('Tally is already running');
-      } else {
-        // Start Tally if not running
-        exec(`start "" "${TALLY_PATH}"`, (err, stdout, stderr) => {
-          if (err) {
-            return res.status(500).send('Error starting Tally');
-          }
-          return res.send('Tally started successfully');
-        });
-      }
-    });
+
+app.get('/start-tally', (req, res) => {
+  // Check if Tally is running
+  exec('tasklist', (err, stdout, stderr) => {
+    if (err) {
+      return res.status(500).send('Error checking task list');
+    }
+
+    if (stdout.toLowerCase().includes('tally.exe')) {
+      return res.send('Tally is already running');
+    } else {
+      // Start Tally if not running
+      exec(`start "" "${TALLY_PATH}"`, (err, stdout, stderr) => {
+        if (err) {
+          return res.status(500).send('Error starting Tally');
+        }
+        return res.send('Tally started successfully');
+      });
+    }
   });
+});
 
 const PORT = process.env.PORT || 3000;
 
@@ -120,7 +121,7 @@ const { log } = require("console");
 // const connectDB= require("./db/connect");
 
 app.get("/", (req, res) => {
-    res.send("Hi, I'm live");
+  res.send("Hi, I'm live");
 });
 
 app.use(express.json()); // Middleware to parse JSON bodies
@@ -130,14 +131,14 @@ app.use(express.json()); // Middleware to parse JSON bodies
 app.use("/api/products", product_routes)
 
 const start = async () => {
-    try {
-        // await connectDB(process.env.MONGO_URL);
-        app.listen(PORT, () => {
-            console.log(PORT + " Yes I am connected");
-        });
-    } catch (error) {
-        console.log(error);
-    }
+  try {
+    // await connectDB(process.env.MONGO_URL);
+    app.listen(PORT, () => {
+      console.log(PORT + " Yes I am connected");
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 start();
