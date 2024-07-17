@@ -53,13 +53,13 @@ function getLocalIpAddress() {
 app.use(
   '/tally',
   createProxyMiddleware({
-    target: `http://${getLocalIpAddress()}:9001`, // Set target to user's local IP address
+    // target: `http://${getLocalIpAddress()}:9001`, // Set target to user's local IP address
     // target: `http://127.0.0.1:9001`, // Set target to user's local IP address
     headers: {
       "Connection": "keep-alive"
   },
   logLevel: "debug",
-  agent: new HttpsProxyAgent(`http://${getLocalIpAddress()}:9001`),
+  // agent: new HttpsProxyAgent(`http://${getLocalIpAddress()}:9001`),
 
     secure: false,
     changeOrigin: true,
