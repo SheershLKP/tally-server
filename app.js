@@ -111,7 +111,7 @@ function detectLocalOS() {
 
 
 function checkAndStartTally(req, res) {
-  const userAgent = window.navigator.userAgent;
+  // const userAgent = window.navigator.userAgent;
   let os;
 
   if (userAgent.indexOf('Win') != -1) {
