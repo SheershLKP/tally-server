@@ -9,7 +9,7 @@ const { exec } = require('child_process');
 const axios = require('axios');
 
 
-const TALLY_URL = 'http://localhost:9001';
+const TALLY_URL = 'http://172.16.14.214:9001';
 
 
 app.use(cors());
@@ -68,7 +68,6 @@ app.use(cors());
     // Check if Tally is running
     exec('tasklist', (err, stdout, stderr) => {
       if (err) {
-        console.log("Error is", err);
         return res.status(500).send('Error checking task list');
       }
   
@@ -85,6 +84,7 @@ app.use(cors());
       }
     });
   });
+
 const PORT = process.env.PORT || 3000;
 
 const product_routes = require("./routes/product");
