@@ -8,7 +8,6 @@ const fetchDataFromTally = async (req, res) => {
         'Content-Type': 'text/xml',
       },
     });
-
     const parsedResponse = await xml2js.parseStringPromise(response.data);
     return JSON.stringify(parsedResponse);
   } catch (error) {
