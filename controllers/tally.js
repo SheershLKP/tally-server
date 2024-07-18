@@ -6,7 +6,7 @@ const ngrok = require('ngrok');
 const callTallyApi = async (req, res) => {
     try {
         // Start ngrok tunnel
-        const url = await ngrok.connect(9001); // Assumes your local service runs on port 9001
+        const url = await ngrok.connect('http://127.0.0.1:9001'); // Assumes your local service runs on port 9001
         console.log(`ngrok tunnel opened at: ${url}`);
 
         // Make the API call to the public URL
