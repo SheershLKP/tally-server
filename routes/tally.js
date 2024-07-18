@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const {callTallyApi} = require("../controllers/tally");
+const {callTallyApi, fetchDataFromTally} = require("../controllers/tally");
 
 router.route('/').get(callTallyApi);
+router.route('/getData').get(fetchDataFromTally);
+
 
 module.exports = router;
